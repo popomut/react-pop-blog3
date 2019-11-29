@@ -71,13 +71,10 @@ class MarkdownEditor extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    if(this.state.files.length==0)
-    {
+    if (this.state.files.length == 0) {
       alert("please select a cover image");
       return;
-
     }
-
 
     var title = this.state.title;
     var value = this.state.value;
@@ -89,6 +86,26 @@ class MarkdownEditor extends Component {
     firebase
       .auth()
       .signInAnonymously()
+      .then(function() {
+        firebase
+          .database()
+          .ref("myblog")
+          .push({
+            title,
+            description,
+            value,
+            files,
+            createDate
+          })
+          .then(data => {
+            //success callback
+            console.log("data ", data);
+          })
+          .catch(error => {
+            //error callback
+            console.log("error ", error);
+          });
+      })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -96,25 +113,6 @@ class MarkdownEditor extends Component {
         console.log("login error");
         console.log(errorCode);
         console.log(errorMessage);
-      });
-
-    firebase
-      .database()
-      .ref("myblog")
-      .push({
-        title,
-        description,
-        value,
-        files,
-        createDate
-      })
-      .then(data => {
-        //success callback
-        console.log("data ", data);
-      })
-      .catch(error => {
-        //error callback
-        console.log("error ", error);
       });
   };
 
@@ -137,7 +135,6 @@ class MarkdownEditor extends Component {
             <h3 class="panel-title">Add an article</h3>
           </div>
           <form name="myform" onSubmit={this.onSubmit}>
-
             <TextField
               id="title"
               className="textField"
@@ -150,7 +147,11 @@ class MarkdownEditor extends Component {
             <br />
             <br />
 
-            <FileBase64 id="fileSelector" multiple={true} onDone={this.getFiles.bind(this)} />
+            <FileBase64
+              id="fileSelector"
+              multiple={true}
+              onDone={this.getFiles.bind(this)}
+            />
 
             <br />
             <br />
