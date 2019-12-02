@@ -50,7 +50,7 @@ class ArticleCard extends Component {
   }
 
   handleClickCard(id) {
-    alert(id);
+    //alert(id);
     this.props.history.push("/showArticle/" + id);
   }
 

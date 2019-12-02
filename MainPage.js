@@ -32,7 +32,7 @@ class MainPage extends Component {
 
   getData(e) {
     //anonymouse authentication
-
+ 
     var stateObject = this;
     console.log("state object" + stateObject);
     firebase
