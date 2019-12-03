@@ -63,7 +63,11 @@ class MarkdownEditor extends Component {
     console.log(" handle file upload here");
     console.log(file);
 
-    let uploadFileName = file.name + "_" + new Date().getTime();
+
+    let uploadFileName = file.name
+    let dotIndex = uploadFileName.indexOf(".");
+    let tempFileName = uploadFileName.substring(0,dotIndex);
+    uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`cover_images/${uploadFileName}`);
@@ -113,7 +117,10 @@ class MarkdownEditor extends Component {
     console.log(" handle file upload here");
     console.log(file);
 
-    let uploadFileName = file.name + "_" + new Date().getTime();
+    let uploadFileName = file.name
+    let dotIndex = uploadFileName.indexOf(".");
+    let tempFileName = uploadFileName.substring(0,dotIndex);
+    uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`images/${uploadFileName}`);
