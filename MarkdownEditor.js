@@ -81,14 +81,14 @@ class MarkdownEditor extends Component {
       error => {
         //Error
         this.setState({
-          messag: `Upload error : ${error.message}`
+          message: `Upload error : ${error.message}`
         });
       },
       () => {
         //Success
         console.log("upload success.");
         this.setState({
-          messag: `Upload Success`,
+          message: `Upload Success`,
           picture: task.snapshot.downloadURL //เผื่อนำไปใช้ต่อในการแสดงรูปที่ Upload ไป
         });
       }
@@ -224,7 +224,7 @@ class MarkdownEditor extends Component {
             >
               {/* Set current files using the <File/> component */}
               {this.state.files.map(file => (
-                <File key={file} source={file} />
+                <File key={file + "222"} source={file + "22"} />
               ))}
             </FilePond>
 
