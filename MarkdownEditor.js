@@ -7,6 +7,17 @@ import TextField from "@material-ui/core/TextField";
 import firebase from "./firebase/Firebase";
 import FileBase64 from "react-file-base64";
 
+//Import npm react-filepond
+import { FilePond, File, registerPlugin } from "react-filepond";
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// FilePond Register plugin
+import FilePondImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+registerPlugin(FilePondImagePreview);
+
 //source page: https://www.npmjs.com/package/react-mde
 //https://codesandbox.io/s/vm1k17ymq0
 
@@ -32,6 +43,56 @@ class MarkdownEditor extends Component {
     });
 
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  handleFilePondInit() {
+    // handle init file upload here
+    console.log("now initialised", this.pond);
+  }
+
+  handleFilePondProcessing(
+    fieldName,
+    file,
+    metadata,
+    load,
+    error,
+    progress,
+    abort
+  ) {
+    // handle file upload here
+    console.log(" handle file upload here");
+    console.log(file);
+
+    const fileUpload = file;
+    const storageRef = firebase.storage().ref(`cover_images/${file.name}`);
+    const task = storageRef.put(fileUpload);
+
+    task.on(
+      `state_changed`,
+      snapshort => {
+        console.log("uploading... " + snapshort.bytesTransferred, snapshort.totalBytes);
+        let percentage =
+          (snapshort.bytesTransferred / snapshort.totalBytes) * 100;
+        //Process
+        this.setState({
+          uploadValue: percentage
+        });
+      },
+      error => {
+        //Error
+        this.setState({
+          messag: `Upload error : ${error.message}`
+        });
+      },
+      () => {
+        //Success
+        console.log("upload success.");
+        this.setState({
+          messag: `Upload Success`,
+          picture: task.snapshot.downloadURL //เผื่อนำไปใช้ต่อในการแสดงรูปที่ Upload ไป
+        });
+      }
+    );
   }
 
   handleValueChange = e => {
@@ -152,6 +213,20 @@ class MarkdownEditor extends Component {
               multiple={true}
               onDone={this.getFiles.bind(this)}
             />
+
+            {/* Pass FilePond properties as attributes */}
+            <FilePond
+              allowMultiple={true}
+              maxFiles={3}
+              ref={ref => (this.pond = ref)}
+              server={{ process: this.handleFilePondProcessing.bind(this) }}
+              oninit={() => this.handleFilePondInit()}
+            >
+              {/* Set current files using the <File/> component */}
+              {this.state.files.map(file => (
+                <File key={file} source={file} />
+              ))}
+            </FilePond>
 
             <br />
             <br />
