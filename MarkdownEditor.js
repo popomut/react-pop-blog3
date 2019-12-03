@@ -63,14 +63,69 @@ class MarkdownEditor extends Component {
     console.log(" handle file upload here");
     console.log(file);
 
+    let uploadFileName = file.name + "_" + new Date().getTime();
+
     const fileUpload = file;
-    const storageRef = firebase.storage().ref(`cover_images/${file.name}`);
+    const storageRef = firebase.storage().ref(`cover_images/${uploadFileName}`);
     const task = storageRef.put(fileUpload);
 
     task.on(
       `state_changed`,
       snapshort => {
-        console.log("uploading... " + snapshort.bytesTransferred, snapshort.totalBytes);
+        console.log(
+          "uploading... " + snapshort.bytesTransferred,
+          snapshort.totalBytes
+        );
+        let percentage =
+          (snapshort.bytesTransferred / snapshort.totalBytes) * 100;
+        //Process
+        this.setState({
+          uploadValue: percentage
+        });
+      },
+      error => {
+        //Error
+        this.setState({
+          message: `Upload error : ${error.message}`
+        });
+      },
+      () => {
+        //Success
+        console.log("upload success.");
+        this.setState({
+          message: `Upload Success`,
+          picture: task.snapshot.downloadURL //เผื่อนำไปใช้ต่อในการแสดงรูปที่ Upload ไป
+        });
+      }
+    );
+  }
+
+  handleFilePondProcessingForArticle(
+    fieldName,
+    file,
+    metadata,
+    load,
+    error,
+    progress,
+    abort
+  ) {
+    // handle file upload here
+    console.log(" handle file upload here");
+    console.log(file);
+
+    let uploadFileName = file.name + "_" + new Date().getTime();
+
+    const fileUpload = file;
+    const storageRef = firebase.storage().ref(`images/${uploadFileName}`);
+    const task = storageRef.put(fileUpload);
+
+    task.on(
+      `state_changed`,
+      snapshort => {
+        console.log(
+          "uploading... " + snapshort.bytesTransferred,
+          snapshort.totalBytes
+        );
         let percentage =
           (snapshort.bytesTransferred / snapshort.totalBytes) * 100;
         //Process
@@ -177,6 +232,7 @@ class MarkdownEditor extends Component {
       });
   };
 
+/*
   getFiles(files) {
     console.log(files);
     console.log(files[0].name);
@@ -184,6 +240,7 @@ class MarkdownEditor extends Component {
 
     this.setState({ files: files });
   }
+  */
 
   render() {
     return (
@@ -204,33 +261,46 @@ class MarkdownEditor extends Component {
               margin="normal"
               variant="outlined"
             />
+            <br />
+            <br />
+            
 
             <br />
             <br />
-
-            <FileBase64
-              id="fileSelector"
-              multiple={true}
-              onDone={this.getFiles.bind(this)}
-            />
-
-            {/* Pass FilePond properties as attributes */}
+            Upload Cover Image
+            <br />
+            <br />
             <FilePond
               allowMultiple={true}
-              maxFiles={3}
+              maxFiles={1}
               ref={ref => (this.pond = ref)}
               server={{ process: this.handleFilePondProcessing.bind(this) }}
               oninit={() => this.handleFilePondInit()}
             >
               {/* Set current files using the <File/> component */}
               {this.state.files.map(file => (
-                <File key={file + "222"} source={file + "22"} />
+                <File key={file} source={file} />
               ))}
             </FilePond>
-
             <br />
             <br />
-
+            Upload Article Images
+            <br />
+            <br />
+            <FilePond
+              allowMultiple={true}
+              maxFiles={20}
+              ref={ref => (this.pond = ref)}
+              server={{ process: this.handleFilePondProcessingForArticle.bind(this) }}
+              oninit={() => this.handleFilePondInit()}
+            >
+              {/* Set current files using the <File/> component */}
+              {this.state.files.map(file => (
+                <File key={file} source={file} />
+              ))}
+            </FilePond>
+            <br />
+            <br />
             <TextField
               id="description"
               label="What is title description? put it here please."
@@ -242,10 +312,8 @@ class MarkdownEditor extends Component {
               margin="normal"
               variant="filled"
             />
-
             <br />
             <br />
-
             <ReactMde
               onChange={this.handleValueChange}
               onTabChange={this.handleTabChange}
@@ -255,9 +323,7 @@ class MarkdownEditor extends Component {
               }
               selectedTab={this.state.tab}
             />
-
             <br />
-
             <button type="submit" class="btn btn-success">
               Post Article
             </button>
