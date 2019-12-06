@@ -67,7 +67,7 @@ class MarkdownEditor extends Component {
     let uploadFileName = file.name
     let dotIndex = uploadFileName.indexOf(".");
     let tempFileName = uploadFileName.substring(0,dotIndex);
-    uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
+    //uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`cover_images/${uploadFileName}`);
@@ -120,7 +120,7 @@ class MarkdownEditor extends Component {
     let uploadFileName = file.name
     let dotIndex = uploadFileName.indexOf(".");
     let tempFileName = uploadFileName.substring(0,dotIndex);
-    uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
+    //uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`images/${uploadFileName}`);
