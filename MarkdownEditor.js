@@ -63,11 +63,11 @@ class MarkdownEditor extends Component {
     console.log(" handle file upload here");
     console.log(file);
 
-
-    let uploadFileName = file.name
+    let uploadFileName = file.name;
     let dotIndex = uploadFileName.indexOf(".");
-    let tempFileName = uploadFileName.substring(0,dotIndex);
-    //uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
+    let tempFileName = uploadFileName.substring(0, dotIndex);
+    uploadFileName = tempFileName + "_" + new Date().getTime();
+    +".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`cover_images/${uploadFileName}`);
@@ -117,10 +117,11 @@ class MarkdownEditor extends Component {
     console.log(" handle file upload here");
     console.log(file);
 
-    let uploadFileName = file.name
+    let uploadFileName = file.name;
     let dotIndex = uploadFileName.indexOf(".");
-    let tempFileName = uploadFileName.substring(0,dotIndex);
-    //uploadFileName = tempFileName + "_" + new Date().getTime(); + ".png";
+    let tempFileName = uploadFileName.substring(0, dotIndex);
+    uploadFileName = tempFileName + "_" + new Date().getTime();
+    +".png";
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`images/${uploadFileName}`);
@@ -239,7 +240,7 @@ class MarkdownEditor extends Component {
       });
   };
 
-/*
+  /*
   getFiles(files) {
     console.log(files);
     console.log(files[0].name);
@@ -270,8 +271,6 @@ class MarkdownEditor extends Component {
             />
             <br />
             <br />
-            
-
             <br />
             <br />
             Upload Cover Image
@@ -298,7 +297,9 @@ class MarkdownEditor extends Component {
               allowMultiple={true}
               maxFiles={20}
               ref={ref => (this.pond = ref)}
-              server={{ process: this.handleFilePondProcessingForArticle.bind(this) }}
+              server={{
+                process: this.handleFilePondProcessingForArticle.bind(this)
+              }}
               oninit={() => this.handleFilePondInit()}
             >
               {/* Set current files using the <File/> component */}
