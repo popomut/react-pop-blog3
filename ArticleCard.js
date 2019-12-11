@@ -16,7 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-import windowSize from 'react-window-size';
+import windowSize from "react-window-size";
 
 //source page: https://www.npmjs.com/package/react-mde
 //https://codesandbox.io/s/vm1k17ymq0
@@ -70,13 +70,14 @@ class ArticleCard extends Component {
       console.log("test test =====================================");
       console.log("key " + key);
       //console.log(dataEntries.length);
-      var imageInBase64 = dataEntries[key].files[0].base64;
+      var imageInBase64 =
+        "https://firebasestorage.googleapis.com/v0/b/ng-blog-3d3e9.appspot.com/o/cover_images%2F" +
+        dataEntries[key].coverFileName;
       //console.log(test);
 
-      if(this.props.windowWidth < 400)
-      {
+      if (this.props.windowWidth < 400) {
         //this is to skip showing bigcard for small device, show it as smallcard.
-        count=100;
+        count = 100;
       }
 
       if (count != 1) {
@@ -107,7 +108,6 @@ class ArticleCard extends Component {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-
                 <div>
                   <Link to="/showArticle" className="btn btn-primary">
                     Read
@@ -145,7 +145,6 @@ class ArticleCard extends Component {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-
                 <div>
                   <Link to="/showArticle" className="btn btn-primary">
                     Read
@@ -171,4 +170,6 @@ class ArticleCard extends Component {
 
 //export default ArticleCard;
 
-export default windowSize(withRouter(withStyles(styles, { withTheme: true })(ArticleCard)));
+export default windowSize(
+  withRouter(withStyles(styles, { withTheme: true })(ArticleCard))
+);
