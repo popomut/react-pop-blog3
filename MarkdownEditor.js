@@ -26,6 +26,7 @@ const initialState = {
   description: "",
   value: "**Hello world!!!**",
   tab: "write",
+  coverFileName: "",
   files: []
 };
 
@@ -68,6 +69,10 @@ class MarkdownEditor extends Component {
     let tempFileName = uploadFileName.substring(0, dotIndex);
     uploadFileName = tempFileName + "_" + new Date().getTime();
     +".png";
+
+    this.setState({
+      coverFileName: uploadFileName
+    });
 
     const fileUpload = file;
     const storageRef = firebase.storage().ref(`cover_images/${uploadFileName}`);
@@ -195,14 +200,9 @@ class MarkdownEditor extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    if (this.state.files.length == 0) {
-      alert("please select a cover image");
-      return;
-    }
-
     var title = this.state.title;
     var value = this.state.value;
-    var files = this.state.files;
+    var coverFileName = this.state.coverFileName;
     var createDate = new Date().getTime();
     var description = this.state.description;
 
@@ -218,7 +218,7 @@ class MarkdownEditor extends Component {
             title,
             description,
             value,
-            files,
+            coverFileName,
             createDate
           })
           .then(data => {
