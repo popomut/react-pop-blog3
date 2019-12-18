@@ -44,7 +44,7 @@ class App extends Component {
             </AppBar>
           </div>
           <Grid container spacing={1}>
-            <Grid item sm={0} lg={1} />
+            <Grid item lg={1} />
 
             <Grid item sm={12} lg={10}>
               <Switch>
@@ -55,7 +55,7 @@ class App extends Component {
               </Switch>
             </Grid>
 
-            <Grid item sm={0} lg={1} />
+            <Grid item lg={1} />
           </Grid>
         </Router>
       </div>

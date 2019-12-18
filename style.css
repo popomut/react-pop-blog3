@@ -1,36 +1,43 @@
-h1, p {
+h1,
+p {
   font-family: Lato;
 }
 
-.submitButton{
-  margin:1px;
-  color:yellow;
-
+.submitButton {
+  margin: 1px;
+  color: yellow;
 }
 
-.textField{
-    marginLeft: 1px;
-    marginRight: 1px;
-    width: 500px;
-  }
+.textField {
+  marginleft: 1px;
+  marginright: 1px;
+  width: 500px;
+}
 
 .card {
-    width: 350px;
-  }
-.bigCard{
-    width: 600px;
-
+  width: 350px;
+}
+.bigCard {
+  width: 600px;
 }
 
-body { font-size: 14px; }
+.coverImage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-width: 100%;
+  height: auto;
+}
 
-#card{
+body {
+  font-size: 14px;
+}
+
+#card {
   display: inline-block;
-    margin: 0 auto;
-    margin-top:20px;
-    margin-left:0px;
-    height:250px;
-    padding-right: 15px;
-    padding-left: 15px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-left: 0px;
+  height: 250px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
-

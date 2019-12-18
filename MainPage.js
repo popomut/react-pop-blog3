@@ -87,7 +87,6 @@ class MainPage extends Component {
       <div>
         <br />
         <br />
-        <br />
         <ArticleCard data={this.state.value} />
       </div>
     );

@@ -3,12 +3,17 @@ import ReactDOM from "react-dom";
 import "react-mde/lib/styles/css/react-mde-all.css";
 import firebase from "./firebase/Firebase";
 import MarkdownRenderer from "./MarkdownRenderer";
+import Grid from "@material-ui/core/Grid";
+
+import loading_placeholder from "/images/loading_placeholder.png";
 
 //source page: https://www.npmjs.com/package/react-mde
 //https://codesandbox.io/s/vm1k17ymq0
 
 const initialState = {
-  value: ""
+  value: "",
+  coverImageURL: loading_placeholder,
+  coverFileName: ""
 };
 
 class ShowArticle extends Component {
@@ -16,10 +21,10 @@ class ShowArticle extends Component {
     super(props);
 
     this.state = initialState;
+    this.getCoverImage = this.getCoverImage.bind(this);
   }
 
   getData(e) {
-
     var stateObject = this;
     var id = this.props.match.params.id;
 
@@ -39,8 +44,11 @@ class ShowArticle extends Component {
             console.log(val.value);
 
             stateObject.setState({
-              value: val.value
+              value: val.value,
+              coverFileName: val.coverFileName
             });
+
+            stateObject.getCoverImage(stateObject.state.coverFileName);
           })
           .catch(e => {
             console.log("Error fetching data", e);
@@ -58,6 +66,27 @@ class ShowArticle extends Component {
     console.log("id : " + id);
   }
 
+  async getCoverImage(coverFileName) {
+    var stateObject = this;
+    var storage = firebase.storage();
+
+    storage
+      .ref("cover_images/" + coverFileName)
+      .getDownloadURL()
+      .then(function(url) {
+        stateObject.setState({
+          coverImageURL: url
+        });
+
+        //var coverImageRef = document.getElementById("coverImage");
+        //coverImageRef.src = url;
+      })
+      .catch(function(error) {
+        console.log(error);
+        // Handle any errors
+      });
+  }
+
   componentDidMount() {
     this.getData();
   }
@@ -68,10 +97,25 @@ class ShowArticle extends Component {
     return (
       <div>
         <br />
+        <div id="coverImage" align="center">
+          <img
+            src={this.state.coverImageURL}
+            class="coverImage"
+            alt="Cover Image"
+          />
+        </div>
         <br />
         <br />
-        Show Article
-        <MarkdownRenderer data={this.state.value} />
+        <Grid container spacing={1}>
+          <Grid item lg={2} />
+
+          <Grid item sm={12} lg={8}>
+            Show Article
+            <MarkdownRenderer data={this.state.value} />
+          </Grid>
+
+          <Grid item lg={2} />
+        </Grid>
       </div>
     );
   }
