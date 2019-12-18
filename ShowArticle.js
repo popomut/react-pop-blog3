@@ -104,8 +104,7 @@ class ShowArticle extends Component {
             alt="Cover Image"
           />
         </div>
-        <br />
-        <br />
+
         <Grid container spacing={1}>
           <Grid item lg={2} />
 

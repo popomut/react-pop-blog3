@@ -122,6 +122,7 @@ class ArticleCard extends Component {
           <div
             id="card"
             class="card"
+            key={count}
             onClick={this.handleClickCard.bind(this, key)}
           >
             <Card key={count} id={count} className={classes.card}>
@@ -160,6 +161,7 @@ class ArticleCard extends Component {
           <div
             id="card"
             class="bigCard"
+            key={count}
             onClick={this.handleClickCard.bind(this, key)}
           >
             <Card key={count} id={count} className={classes.bigCard}>
@@ -198,9 +200,6 @@ class ArticleCard extends Component {
 
     return (
       <div id="dataDiv" align="center">
-        <br />
-        <br />
-
         {items}
       </div>
     );

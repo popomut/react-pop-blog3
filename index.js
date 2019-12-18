@@ -8,6 +8,7 @@ import MarkdownEditor from "./MarkdownEditor";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ShowArticle from "./ShowArticle";
 import TestTest from "./TestTest";
+import TopNav from "./TopNav";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -26,7 +27,11 @@ class App extends Component {
       <div>
         <Router>
           <div>
-            <AppBar position="static">
+            <AppBar
+              position="static"
+              style={{ background: "#1976D2", height: "200px" }}
+            >
+              >
               <Toolbar>
                 <Typography variant="h5" noWrap>
                   &nbsp;
