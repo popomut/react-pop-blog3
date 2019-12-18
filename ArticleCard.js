@@ -48,6 +48,7 @@ class ArticleCard extends Component {
     this.state = initialState;
 
     this.handleClickCard = this.handleClickCard.bind(this);
+    this.getCoverImage = this.getCoverImage.bind(this);
   }
 
   handleClickCard(id) {
@@ -57,7 +58,32 @@ class ArticleCard extends Component {
 
   componentDidMount() {}
 
-  async getCoverImage() {}
+  async getCoverImage(coverFileName, mediaCount) {
+    var storage = firebase.storage();
+
+    storage
+      .ref("cover_images/" + coverFileName)
+      .getDownloadURL()
+      .then(function(url) {
+        /*
+        articleCardObject.setState({
+          coverFileURL: url
+        });
+        */
+
+        //document.getElementById(count).style.background-image = url;
+        //this.cardMedia.current.style.background-image = url;
+
+        var cardRef = document.getElementById(mediaCount);
+        cardRef.style.backgroundImage = "url(" + url + ")";
+
+        console.log("url= " + url);
+      })
+      .catch(function(error) {
+        console.log(error);
+        // Handle any errors
+      });
+  }
 
   render() {
     //classes = useStyles();
@@ -79,30 +105,7 @@ class ArticleCard extends Component {
       console.log("key " + key);
       //console.log(dataEntries.length);
 
-      var storage = firebase.storage();
-      var coverFileName = dataEntries[key].coverFileName;
-      storage
-        .ref("cover_images/" + coverFileName)
-        .getDownloadURL()
-        .then(function(url) {
-          /*
-          articleCardObject.setState({
-            coverFileURL: url
-          });
-          */
-
-          //document.getElementById(count).style.background-image = url;
-          //this.cardMedia.current.style.background-image = url;
-
-          var cardRef = document.getElementById(mediaCount);
-          cardRef.style.backgroundImage = "url(" + url + ")";
-
-          console.log("url= " + url);
-        })
-        .catch(function(error) {
-          console.log(error);
-          // Handle any errors
-        });
+      this.getCoverImage(dataEntries[key].coverFileName, mediaCount);
 
       console.log("test end =====================================");
 
