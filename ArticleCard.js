@@ -57,6 +57,8 @@ class ArticleCard extends Component {
 
   componentDidMount() {}
 
+  async getCoverImage() {}
+
   render() {
     //classes = useStyles();
 
@@ -68,8 +70,11 @@ class ArticleCard extends Component {
 
     const items = [];
     var count = 0;
+    var mediaCount = "media0";
     for (var key in dataEntries) {
       count = count + 1;
+      mediaCount = "media" + count;
+      console.log("count = " + count);
       console.log("test test =====================================");
       console.log("key " + key);
       //console.log(dataEntries.length);
@@ -80,11 +85,17 @@ class ArticleCard extends Component {
         .ref("cover_images/" + coverFileName)
         .getDownloadURL()
         .then(function(url) {
-          // `url` is the download URL for 'images/stars.jpg'
-
+          /*
           articleCardObject.setState({
             coverFileURL: url
           });
+          */
+
+          //document.getElementById(count).style.background-image = url;
+          //this.cardMedia.current.style.background-image = url;
+
+          var cardRef = document.getElementById(mediaCount);
+          cardRef.style.backgroundImage = "url(" + url + ")";
 
           console.log("url= " + url);
         })
@@ -110,11 +121,12 @@ class ArticleCard extends Component {
             class="card"
             onClick={this.handleClickCard.bind(this, key)}
           >
-            <Card className={classes.card}>
+            <Card key={count} id={count} className={classes.card}>
               <CardActionArea>
                 <CardMedia
+                  id={mediaCount}
                   className={classes.media}
-                  image={this.coverFileURL}
+                  image={this.state.coverFileURL}
                   title={dataEntries[key].title}
                 />
                 <CardContent>
@@ -147,11 +159,12 @@ class ArticleCard extends Component {
             class="bigCard"
             onClick={this.handleClickCard.bind(this, key)}
           >
-            <Card className={classes.bigCard}>
+            <Card key={count} id={count} className={classes.bigCard}>
               <CardActionArea>
                 <CardMedia
+                  id={mediaCount}
                   className={classes.bigMedia}
-                  image={this.coverFileURL}
+                  image={this.state.coverFileURL}
                   title={dataEntries[key].title}
                 />
                 <CardContent>
