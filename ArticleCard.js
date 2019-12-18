@@ -105,7 +105,7 @@ class ArticleCard extends Component {
       console.log("key " + key);
       //console.log(dataEntries.length);
 
-      this.getCoverImage(dataEntries[key].coverFileName, mediaCount);
+      //this.getCoverImage(dataEntries[key].coverFileName, mediaCount);
 
       console.log("test end =====================================");
 
@@ -114,8 +114,11 @@ class ArticleCard extends Component {
 
       if (this.props.windowWidth < 400) {
         //this is to skip showing bigcard for small device, show it as smallcard.
-        count = 100;
+        count = count + 100;
+        mediaCount = "media" + count;
       }
+
+      this.getCoverImage(dataEntries[key].coverFileName, mediaCount);
 
       if (count != 1) {
         items.push(
