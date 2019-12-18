@@ -23,6 +23,11 @@
   height: auto;
 }
 
+.imageResponsiveInArticle {
+  max-width: 100%;
+  height: auto;
+}
+
 body {
   font-size: 21px;
   font-family: medium-content-sans-serif-font, -apple-system, BlinkMacSystemFont,

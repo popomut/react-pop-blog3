@@ -105,16 +105,18 @@ class ShowArticle extends Component {
           />
         </div>
 
-        <Grid container spacing={1}>
-          <Grid item lg={2} />
+        <div id="articleContent" class="imageResponsiveInArticle">
+          <Grid container spacing={1}>
+            <Grid item lg={2} />
 
-          <Grid item sm={12} lg={8}>
-            Show Article
-            <MarkdownRenderer data={this.state.value} />
+            <Grid item sm={12} lg={8}>
+              Show Article
+              <MarkdownRenderer data={this.state.value} />
+            </Grid>
+
+            <Grid item lg={2} />
           </Grid>
-
-          <Grid item lg={2} />
-        </Grid>
+        </div>
       </div>
     );
   }
