@@ -23,24 +23,24 @@ class MainPage extends Component {
   sortByKey(array, key) {
     //alert('sort method');
 
-    var newArrayDataOfOjbect = Object.values(array)
-    return newArrayDataOfOjbect.sort(function (a, b) {
-      var x = a[key]; var y = b[key];
-      return (((x < y) ? -1 : ((x > y) ? 1 : 0))) * (-1);
+    var newArrayDataOfOjbect = Object.values(array);
+    return newArrayDataOfOjbect.sort(function(a, b) {
+      var x = a[key];
+      var y = b[key];
+      return (x < y ? -1 : x > y ? 1 : 0) * -1;
     });
   }
 
   getData(e) {
     //anonymouse authentication
- 
+
     var stateObject = this;
     console.log("state object" + stateObject);
     firebase
       .auth()
       .signInAnonymously()
-      .then(function () {
-
-        console.log('aaaaaaaaaaaaaaaa');
+      .then(function() {
+        console.log("aaaaaaaaaaaaaaaa");
         //get data from firebase
         firebase
           .database()
@@ -65,10 +65,8 @@ class MainPage extends Component {
           .catch(e => {
             console.log("Error fetching data", e);
           });
-
-
       })
-      .catch(function (error) {
+      .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -76,7 +74,6 @@ class MainPage extends Component {
         console.log(errorCode);
         console.log(errorMessage);
       });
-
   }
 
   componentDidMount() {
@@ -95,6 +92,6 @@ class MainPage extends Component {
       </div>
     );
   }
-} 
+}
 
 export default MainPage;

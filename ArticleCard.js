@@ -22,7 +22,8 @@ import windowSize from "react-window-size";
 //https://codesandbox.io/s/vm1k17ymq0
 
 const initialState = {
-  value: "test"
+  value: "",
+  coverFileURL: ""
 };
 
 const styles = theme => ({
@@ -63,6 +64,8 @@ class ArticleCard extends Component {
 
     const { classes } = this.props;
 
+    var articleCardObject = this;
+
     const items = [];
     var count = 0;
     for (var key in dataEntries) {
@@ -70,9 +73,29 @@ class ArticleCard extends Component {
       console.log("test test =====================================");
       console.log("key " + key);
       //console.log(dataEntries.length);
-      var imageInBase64 =
-        "https://firebasestorage.googleapis.com/v0/b/ng-blog-3d3e9.appspot.com/o/cover_images%2F" +
-        dataEntries[key].coverFileName;
+
+      var storage = firebase.storage();
+      var coverFileName = dataEntries[key].coverFileName;
+      storage
+        .ref("cover_images/" + coverFileName)
+        .getDownloadURL()
+        .then(function(url) {
+          // `url` is the download URL for 'images/stars.jpg'
+
+          articleCardObject.setState({
+            coverFileURL: url
+          });
+
+          console.log("url= " + url);
+        })
+        .catch(function(error) {
+          console.log(error);
+          // Handle any errors
+        });
+
+      console.log("test end =====================================");
+
+      //var imageInBase64 ="https://firebasestorage.googleapis.com/v0/b/ng-blog-3d3e9.appspot.com/o/cover_images%2F" +dataEntries[key].coverFileName;
       //console.log(test);
 
       if (this.props.windowWidth < 400) {
@@ -91,7 +114,7 @@ class ArticleCard extends Component {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={imageInBase64}
+                  image={this.coverFileURL}
                   title={dataEntries[key].title}
                 />
                 <CardContent>
@@ -128,7 +151,7 @@ class ArticleCard extends Component {
               <CardActionArea>
                 <CardMedia
                   className={classes.bigMedia}
-                  image={imageInBase64}
+                  image={this.coverFileURL}
                   title={dataEntries[key].title}
                 />
                 <CardContent>
