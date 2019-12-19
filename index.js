@@ -8,7 +8,7 @@ import MarkdownEditor from "./MarkdownEditor";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ShowArticle from "./ShowArticle";
 import TestTest from "./TestTest";
-import TopNav from "./TopNav";
+import SigninAddArticle from "./SigninAddArticle";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -57,6 +57,7 @@ class App extends Component {
                 <Route exact path="/showArticle/:id" component={ShowArticle} />
                 <Route exact path="/addArticle" component={MarkdownEditor} />
                 <Route exact path="/testtest" component={TestTest} />
+                <Route exact path="/signin" component={SigninAddArticle} />
               </Switch>
             </Grid>
 
