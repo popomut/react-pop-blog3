@@ -44,6 +44,7 @@ class MarkdownEditor extends Component {
     });
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.checkIfAlreadyLogin = this.checkIfAlreadyLogin.bind(this);
   }
 
   handleFilePondInit() {
@@ -249,6 +250,37 @@ class MarkdownEditor extends Component {
     this.setState({ files: files });
   }
   */
+
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log("user logged");
+      }
+    });
+  }
+
+  async checkIfAlreadyLogin() {
+    await firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log("user logged");
+      } else {
+        this.props.history.push("/signin");
+      }
+    });
+
+    /*
+    var user = firebase.auth().currentUser;
+    console.log("logged in user " + user);
+
+    if (user == null) {
+      this.props.history.push("/signin");
+    }
+    */
+  }
+
+  componentDidMount() {
+    this.checkIfAlreadyLogin();
+  }
 
   render() {
     return (
