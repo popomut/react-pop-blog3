@@ -45,6 +45,7 @@ class MarkdownEditor extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.checkIfAlreadyLogin = this.checkIfAlreadyLogin.bind(this);
+    this.signout = this.signout.bind(this);
   }
 
   handleFilePondInit() {
@@ -283,11 +284,32 @@ class MarkdownEditor extends Component {
     this.checkIfAlreadyLogin();
   }
 
+  signout = e => {
+    e.preventDefault();
+
+    firebase
+      .auth()
+      .signOut()
+      .then(function() {
+        console.log("signout success");
+        this.props.history.push("/signin");
+        // Sign-out successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
+  };
+
   render() {
     return (
       <div className="container">
         <br />
         <br />
+        <form name="myform" onSubmit={this.signout}>
+          <button type="submit" class="btn btn-success">
+            Signout
+          </button>
+        </form>
         <br />
         <div class="panel panel-default">
           <div class="panel-heading">
