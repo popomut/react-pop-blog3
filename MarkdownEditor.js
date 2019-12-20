@@ -249,6 +249,7 @@ class MarkdownEditor extends Component {
 
     this.setState({ files: files });
   }
+
   */
 
   componentWillMount() {
