@@ -207,6 +207,7 @@ class MarkdownEditor extends Component {
     var coverFileName = this.state.coverFileName;
     var createDate = new Date().getTime();
     var description = this.state.description;
+    var forSorting = "-" + createDate;
 
     //anonymouse authentication
     firebase
@@ -221,7 +222,8 @@ class MarkdownEditor extends Component {
             description,
             value,
             coverFileName,
-            createDate
+            createDate,
+            forSorting
           })
           .then(data => {
             //success callback
