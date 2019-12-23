@@ -17,13 +17,46 @@ class MainPage extends Component {
 
     this.state = initialState;
     this.sortByKey = this.sortByKey.bind(this);
+    this.OrganizeObjectArray = this.OrganizeObjectArray.bind(this);
+  }
+
+  OrganizeObjectArray(objArray) {
+    const object1 = {
+      aaa: { color1: "pink1", color2: "red" },
+      bbb: { color1: "pink2", color2: "red" },
+      ccc: { color1: "pink3", color2: "red" },
+      ddd: { color1: "pink4", color2: "red" }
+    };
+
+    console.log(Object.keys(objArray));
+    console.log(Object.values(objArray));
+
+    var key1 = Object.keys(objArray);
+    var value1 = Object.values(objArray);
+    var object2 = {};
+
+    var i = 0;
+    for (i = 0; i < value1.length; i++) {
+      value1[i]["key"];
+      value1[i]["key"] = key1[i];
+    }
+
+    console.log("OrganizeObjectArray");
+    console.log(value1);
+    return value1;
+
+    // expected output: Array ["a", "b", "c"]
   }
 
   //DESC sort
   sortByKey(array, key) {
     //alert('sort method');
 
-    var newArrayDataOfOjbect = Object.values(array);
+    var newArrayDataOfOjbect = this.OrganizeObjectArray(array);
+
+    //var newArrayDataOfOjbect = Object.values(array);
+
+    console.log(newArrayDataOfOjbect);
     return newArrayDataOfOjbect.sort(function(a, b) {
       var x = a[key];
       var y = b[key];
@@ -50,13 +83,17 @@ class MainPage extends Component {
           .once("value")
           .then(snapshot => {
             const key2 = snapshot.key;
-            const val2 = snapshot.val();
+            var val2 = snapshot.val();
 
             console.log("print val");
             console.log(val2);
             //need to sort result to be DESC
             //https://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value
-            //val = this.sortByKey(val, 'createDate');
+            val2 = stateObject.sortByKey(val2, "createDate");
+
+            console.log("after soring by key");
+
+            console.log(val2);
 
             stateObject.setState({
               value: val2

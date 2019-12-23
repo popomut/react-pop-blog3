@@ -28,6 +28,8 @@ class ShowArticle extends Component {
     var stateObject = this;
     var id = this.props.match.params.id;
 
+    console.log("id = " + id);
+
     //anonymouse authentication
     firebase
       .auth()

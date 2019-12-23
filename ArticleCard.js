@@ -126,7 +126,7 @@ class ArticleCard extends Component {
             id="card"
             class="card"
             key={count}
-            onClick={this.handleClickCard.bind(this, key)}
+            onClick={this.handleClickCard.bind(this, dataEntries[key].key)}
           >
             <Card key={count} id={count} className={classes.card}>
               <CardActionArea>
@@ -165,7 +165,7 @@ class ArticleCard extends Component {
             id="card"
             class="bigCard"
             key={count}
-            onClick={this.handleClickCard.bind(this, key)}
+            onClick={this.handleClickCard.bind(this, dataEntries[key].key)}
           >
             <Card key={count} id={count} className={classes.bigCard}>
               <CardActionArea>
