@@ -9,6 +9,11 @@
   width: 500px;
 }
 
+.imageResponsiveInArticle {
+  margin: 5px;
+  padding: 5px;
+}
+
 .card {
   width: 350px;
 }
