@@ -30,7 +30,7 @@ const initialState = {
   files: []
 };
 
-class MarkdownEditor extends Component {
+class MarkdownEditor2 extends Component {
   constructor(props) {
     super(props);
 
@@ -400,4 +400,4 @@ class MarkdownEditor extends Component {
   }
 }
 
-export default MarkdownEditor;
+export default MarkdownEditor2;
