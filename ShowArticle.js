@@ -13,6 +13,7 @@ import loading_placeholder from "/images/loading_placeholder.png";
 const initialState = {
   value: "",
   coverImageURL: loading_placeholder,
+  title: "",
   coverFileName: ""
 };
 
@@ -47,7 +48,8 @@ class ShowArticle extends Component {
 
             stateObject.setState({
               value: val.value,
-              coverFileName: val.coverFileName
+              coverFileName: val.coverFileName,
+              title: val.title
             });
 
             stateObject.getCoverImage(stateObject.state.coverFileName);
@@ -112,7 +114,10 @@ class ShowArticle extends Component {
             <Grid item lg={2} />
 
             <Grid item sm={12} lg={8}>
-              Show Article
+              <br />
+
+              <h1>{this.state.title}</h1>
+
               <MarkdownRenderer data={this.state.value} />
             </Grid>
 

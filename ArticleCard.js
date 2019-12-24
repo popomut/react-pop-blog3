@@ -184,7 +184,7 @@ class ArticleCard extends Component {
                     color="textSecondary"
                     component="p"
                   >
-                    {dataEntries[key].value}
+                    {dataEntries[key].description}
                   </Typography>
                 </CardContent>
               </CardActionArea>
